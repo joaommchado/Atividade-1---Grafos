@@ -2,19 +2,6 @@
 #include <stdlib.h>
 #define SIZE 40
 
-struct queue {
-  int items[SIZE];
-  int front;
-  int rear;
-};
-
-struct queue* createQueue();
-void enqueue(struct queue* q, int);
-int dequeue(struct queue* q);
-void display(struct queue* q);
-int isEmpty(struct queue* q);
-void printQueue(struct queue* q);
-
 struct node {
   int vertex;
   int valor;
@@ -29,32 +16,6 @@ struct Graph {
   struct node** adjLists;
   int* visited;
 };
-
-// BFS algorithm
-void bfs(struct Graph* graph, int startVertex) {
-  struct queue* q = createQueue();
-
-  graph->visited[startVertex] = 1;
-  enqueue(q, startVertex);
-
-  while (!isEmpty(q)) {
-    printQueue(q);
-    int currentVertex = dequeue(q);
-    printf("%d ", currentVertex);
-
-    struct node* temp = graph->adjLists[currentVertex];
-
-    while (temp) {
-      int adjVertex = temp->vertex;
-
-      if (graph->visited[adjVertex] == 0) {
-        graph->visited[adjVertex] = 1;
-        enqueue(q, adjVertex);
-      }
-      temp = temp->next;
-    }
-  }
-}
 
 // Creating a node
 struct node* createNode(int v) {
@@ -94,66 +55,6 @@ void adicionarAresta(struct Graph* graph, int src, int dest) {
   graph->adjLists[dest] = newNode;
 }
 
-// Create a queue
-struct queue* createQueue() {
-  struct queue* q = malloc(sizeof(struct queue));
-  q->front = -1;
-  q->rear = -1;
-  return q;
-}
-
-// Check if the queue is empty
-int isEmpty(struct queue* q) {
-  if (q->rear == -1)
-    return 1;
-  else
-    return 0;
-}
-
-// Adding elements into queue
-void enqueue(struct queue* q, int value) {
-  if (q->rear == SIZE - 1)
-    printf("\nQueue is Full!!");
-  else {
-    if (q->front == -1)
-      q->front = 0;
-    q->rear++;
-    q->items[q->rear] = value;
-  }
-}
-
-// Removing elements from queue
-int dequeue(struct queue* q) {
-  int item;
-  if (isEmpty(q)) {
-    printf("Queue is empty");
-    item = -1;
-  } else {
-    item = q->items[q->front];
-    q->front++;
-    if (q->front > q->rear) {
-      q->front = q->rear = -1;
-    }
-  }
-  return item;
-}
-
-// Print the queue
-void printQueue(struct queue* q) {
-  int i = q->front;
-
-  if (isEmpty(q)) {
-    printf("Queue is empty");
-  } else {
-    //printf("\nQueue contains \n");
-    for (i = q->front; i < q->rear + 1; i++) {
-      //printf("%d ", q->items[i]);
-    }
-  }
-}
-
-  
-// Driver program to test above functions
 int main()
 {
     
@@ -171,10 +72,12 @@ int main()
     scanf("%s", cores);
 
     for (i=0; i < vertices + (vertices-1); i++){
-      if(i % 2 == 1){
-        graph->adjLists[aux]->valor = cores[i];
+      if(i % 2 == 0){
+        graph->adjLists[0]->valor = 943;
+        aux = aux + 1;
       }
     }
-    //bfs(graph, 3);
+    
+    printf("%d", graph->adjLists[2]->vertex);
     return 0;
 }
