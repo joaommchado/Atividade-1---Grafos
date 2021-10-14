@@ -175,7 +175,6 @@ int main()
         graph->adjLists[aux]->valor = cores[i];
       }
     }
-    
     //bfs(graph, 3);
     return 0;
 }
