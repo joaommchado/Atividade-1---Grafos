@@ -99,15 +99,19 @@ void Calcularsomatorio(struct Graph* graph, int *cores, int *somatorio){
 
 void calcularConflito(int *somatorio, int *mapaArestas, int vertices){
   int i;
+
   bool verificador = false;
   for(i = 0; i < vertices * 2; i++){
-    if(somatorio[mapaArestas[i]] == somatorio[mapaArestas[i+1]]){
-      printf("%d %d\n", i, i+1);
+    if(i % 2 == 0){
+        if(somatorio[mapaArestas[i]] == somatorio[mapaArestas[i+1]]){
+      printf("%d %d\n", mapaArestas[i], mapaArestas[i+1]);
       verificador = true;
+      }
     }
   }
-  if (verificador == false)
+  if(verificador == false){
     printf("SIGMA COLORING");
+  }
 }
 
 // Driver program to test above functions
