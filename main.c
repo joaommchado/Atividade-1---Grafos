@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #define SIZE 40
 
+
 struct node {
   int vertex;
   int valor;
@@ -16,6 +17,7 @@ struct Graph {
   struct node** adjLists;
   int* visited;
 };
+
 
 // Creating a node
 struct node* createNode(int v) {
@@ -42,6 +44,26 @@ struct Graph* createGraph(int vertices) {
   return graph;
 }
 
+void printGraph(struct Graph* graph){
+  int i, j;
+  struct node* temp = graph->adjLists[0];
+
+  for (i = 0; i < graph->numVertices; i++){
+    if(graph->adjLists[i] == NULL){
+      printf("[cabeça: %d] ->\n", i);
+    }
+    else {
+      temp = graph->adjLists[i];
+      printf("[cabeça: %d] ->", i);
+      while(temp) {
+        printf("%d -> ", temp->vertex);
+        temp = temp->next;
+      }
+      printf("\n");
+    }
+  }
+}
+
 // Add edge
 void adicionarAresta(struct Graph* graph, int src, int dest) {
   // Add edge from src to dest
@@ -55,13 +77,33 @@ void adicionarAresta(struct Graph* graph, int src, int dest) {
   graph->adjLists[dest] = newNode;
 }
 
-int main()
-{
+void Calcularsomatorio(struct Graph* graph, int *cores, int *somatorio){
+  int i, j;
+  struct node* temp = graph->adjLists[0];
+
+  for (i = 0; i < graph->numVertices; i++){
+    if(graph->adjLists[i] == NULL){
+      somatorio[i] = cores[i];
+    }
+
+    else {
+      temp = graph->adjLists[i];
+      while(temp) {
+        somatorio[i] += cores[temp->vertex];
+        temp = temp->next;
+      }
+    }
+  }
+  for (i=0; i < graph->numVertices; i++)
+    printf("%d ", somatorio[i]);
+} 
+
+// Driver program to test above functions
+int main(){
     
-    int vertices, arestas, i, src, dest, aux;
-    aux = 0;
+    int vertices, arestas, i, src, dest, aux = 0;
     scanf("%d %d", &vertices, &arestas);
-    char cores[vertices + (vertices - 1)];
+    int cores[vertices], somatorio[vertices];
     struct Graph* graph = createGraph(vertices);
 
     for(i=0; i < arestas; i++){
@@ -69,15 +111,13 @@ int main()
       adicionarAresta(graph, src, dest);
     }
 
-    scanf("%s", cores);
-
-    for (i=0; i < vertices + (vertices-1); i++){
-      if(i % 2 == 0){
-        graph->adjLists[0]->valor = 943;
-        aux = aux + 1;
-      }
+    for(i=0; i < vertices; i++){
+      scanf("%d", &cores[i] );
     }
-    
-    printf("%d", graph->adjLists[2]->vertex);
+
+    Calcularsomatorio(graph, cores, somatorio);
+
+
+
     return 0;
 }
