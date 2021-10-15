@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #define SIZE 40
 
 
@@ -96,7 +97,18 @@ void Calcularsomatorio(struct Graph* graph, int *cores, int *somatorio){
   }
 } 
 
-//void calcularConflito()
+void calcularConflito(int *somatorio, int *mapaArestas, int vertices){
+  int i;
+  bool verificador = false;
+  for(i = 0; i < vertices * 2; i++){
+    if(somatorio[mapaArestas[i]] == somatorio[mapaArestas[i+1]]){
+      printf("%d %d\n", i, i+1);
+      verificador = true;
+    }
+  }
+  if (verificador == false)
+    printf("SIGMA COLORING");
+}
 
 // Driver program to test above functions
 int main(){
@@ -120,5 +132,6 @@ int main(){
       scanf("%d", &cores[i] );
 
   Calcularsomatorio(graph, cores, somatorio);
+  calcularConflito(somatorio, mapaArestas, vertices);
     return 0;
 }
