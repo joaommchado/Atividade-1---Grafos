@@ -94,30 +94,31 @@ void Calcularsomatorio(struct Graph* graph, int *cores, int *somatorio){
       }
     }
   }
-  for (i=0; i < graph->numVertices; i++)
-    printf("%d ", somatorio[i]);
 } 
+
+//void calcularConflito()
 
 // Driver program to test above functions
 int main(){
     
-    int vertices, arestas, i, src, dest, aux = 0;
+    int vertices, arestas, i, src, dest, aux = 0, j = 0;
     scanf("%d %d", &vertices, &arestas);
-    int cores[vertices], somatorio[vertices];
+    int cores[vertices], somatorio[vertices], 
+    mapaArestas[2 * arestas];
     struct Graph* graph = createGraph(vertices);
 
     for(i=0; i < arestas; i++){
       scanf("%d %d", &src, &dest);
       adicionarAresta(graph, src, dest);
+      mapaArestas[j] = src;
+      j++;
+      mapaArestas[j] = dest;
+      j++;
     }
-
-    for(i=0; i < vertices; i++){
+  
+    for(i=0; i < vertices; i++)
       scanf("%d", &cores[i] );
-    }
 
-    Calcularsomatorio(graph, cores, somatorio);
-
-
-
+  Calcularsomatorio(graph, cores, somatorio);
     return 0;
 }
